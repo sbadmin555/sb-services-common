@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG">
+    <Properties>
+        <Property name="log-path">${sys:catalina.home}/logs</Property>
+    </Properties>
+    <Appenders>
+        <RollingFile name="file" fileName="log/sb-services-common.log"
+                     filePattern="log/sb-services-common-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>%d{DEFAULT} [%-5p] [%t] %c [ses=%X{ses};pag=%X{pag};req=%X{req}] %x - %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{DEFAULT} [%-5p] [%t] %c{1} [%X{ses}:%X{pag}:%X{req}] %x - %m%n"/>
+        </Console>
+
+    </Appenders>
+
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </Root>
+
+        <!--<Logger name="org.springframework.security" level="info"/>-->
+        <!--<Logger name="org.springframework.orm" level="info"/>-->
+
+        <!--
+            Hibernate is generally too noisy at DEBUG unless you are debugging Hibernate itself. A couple of
+            exceptions to that are included here. For more:
+            http://docs.jboss.org/hibernate/orm/4.3/topical/html/logging/Logging.html#_log_categories_of_interest
+        -->
+        <!--<Logger name="org.hibernate" level="info"/>-->
+        <!-- Displays all hibernate DB operations as (parameterized) SQL -->
+        <Logger name="org.hibernate.SQL" level="debug"/>
+        <!-- Displays the values bound to the parameters above  -->
+        <Logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="trace"/>
+        <Logger name="com.sb" level="debug"/>
+        <Logger name="org.apache.http.headers" level="debug"/>
+        <Logger name="org.apache.http.wire" level="debug"/>
+    </Loggers>
+</Configuration>
